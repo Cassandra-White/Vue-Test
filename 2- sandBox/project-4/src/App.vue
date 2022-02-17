@@ -1,81 +1,118 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div>
+    <active-element
+      :topic-title="activeTopic && activeTopic.title"
+      :text="activeTopic && activeTopic.fullText"
+    ></active-element>
+    <knowledge-base></knowledge-base>
+  </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      topics: [
+        {
+          id: 'basics',
+          title: 'The Basics',
+          description: 'Core Vue basics you have to know',
+          fullText:
+            'Vue is a great framework and it has a couple of key concepts: Data binding, events, components and reactivity - that should tell you something!',
+        },
+        {
+          id: 'components',
+          title: 'Components',
+          description:
+            'Components are a core concept for building Vue UIs and apps',
+          fullText:
+            'With components, you can split logic (and markup) into separate building blocks and then combine those building blocks (and re-use them) to build powerful user interfaces.',
+        },
+      ],
+      activeTopic: null,
+    };
+  },
+  provide(){
+    return { 
+      topics: this.topics,
+      selectTopic: this.activateTopic, 
+    }
+  },
+  methods: {
+    activateTopic(topicId) {
+      this.activeTopic = this.topics.find((topic) => topic.id === topicId);
+    },
+  },
+  mounted(){
+    setTimeout(() => {
+      this.topics.push({
+        id: 'test',
+          title: 'The Test',
+          description: 'Test pour voir si on peut push comme ça',
+          fullText:
+            'Si tu lis ça c\'est que tu as réussi et que tu es le meilleur !!!',
+        
+      });
+    }, 3000)
+  }
+};
+</script>
+
 <style>
-@import './assets/base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+* {
+  box-sizing: border-box;
+}
+html {
+  font-family: sans-serif;
+}
+body {
+  margin: 0;
+}
+section {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  margin: 2rem auto;
+  max-width: 40rem;
+  padding: 1rem;
+  border-radius: 12px;
 }
 
-header {
-  line-height: 1.5;
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+li {
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  width: 15rem;
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+h2 {
+  margin: 0.75rem 0;
+  text-align: center;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+button {
+  font: inherit;
+  border: 1px solid #c70053;
+  background-color: #c70053;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 30px;
+  cursor: pointer;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+button:hover,
+button:active {
+  background-color: #e24d8b;
+  border-color: #e24d8b;
 }
 </style>

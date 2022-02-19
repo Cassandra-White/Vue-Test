@@ -1,6 +1,8 @@
 <template>
+<div>
     <the-header title="Souviens Toi"></the-header>
     <the-resource :storedResources="storedResources"></the-resource>
+</div>
 </template>
 
 <script>

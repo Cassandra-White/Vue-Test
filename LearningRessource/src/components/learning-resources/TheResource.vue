@@ -1,4 +1,5 @@
 <template>
+<div>
     <base-card>
         <base-button @click="setSelectedTab('stored-resources')" :mode='storedHighligthButton'>Toutes les resources</base-button>
 
@@ -6,6 +7,7 @@
     </base-card>
 
     <component :is="selectedTab"></component>
+</div> 
 </template>
 
 <script>
@@ -39,6 +41,7 @@ export default {
     provide() {
         return {
             resources: this.storedResources,
+            tabSelected: this.selectedTab,
         }
     },
     computed:{

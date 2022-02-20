@@ -5,8 +5,9 @@
 
         <base-button @click="setSelectedTab('add-resource')" :mode='addHighligthButton'>Ajouter une resource</base-button>
     </base-card>
-
-    <component :is="selectedTab"></component>
+    <keep-alive>
+        <component :is="selectedTab"></component>
+    </keep-alive>
 </div> 
 </template>
 
@@ -18,7 +19,6 @@ export default {
         StoredResources,
         AddResource,
     },
-    props:['storedResources'],
     data(){
         return{
             selectedTab:'stored-resources',
@@ -42,6 +42,7 @@ export default {
         return {
             resources: this.storedResources,
             tabSelected: this.selectedTab,
+            resourceRemove: this.removeResource,
         }
     },
     computed:{
@@ -56,6 +57,11 @@ export default {
     methods:{
         setSelectedTab(tab){
             this.selectedTab = tab;
+        },
+
+        removeResource(idResource){
+            const elementRsource = this.storedResources.findIndex((element) => element.id === idResource);
+            this.storedResources.splice(elementRsource, 1);
         },
     }
 

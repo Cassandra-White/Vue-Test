@@ -25,15 +25,28 @@
       </div>
     </form>
   </base-card>
+  <base-dialog v-if='isInvalid' title='Erreur de Formulaire' @click="confirmError">
+    <template #default>
+        <p>Vous ne pouvez pas faire cela</p>
+        <p>Tous les champs doivent être rempli</p>
+    </template>
+    <template #actions>
+        <base-button @click="confirmError">Ok</base-button>
+    </template>
+  </base-dialog>
 </template>
 
 <script>
+import BaseButton from '../UI/BaseButton.vue';
+import BaseDialog from '../UI/BaseDialog.vue';
 export default {
+  components: { BaseDialog, BaseButton },
   data() {
     return {
       inputTitle: "",
       inputDescription: "",
       inputLink: "",
+      isInvalid: false,
     };
   },
   inject: ["tabSelected","resources"],
@@ -41,7 +54,12 @@ export default {
   methods: {
     addNewResource() {
 
-    
+        console.log(this.tabSelected);
+
+        if(this.inputTitle.trim() === ""|| this.inputDescription.trim() === "" || this.inputLink.trim() === '' ){
+            this.isInvalid = true;
+            return;
+        }
       this.resources.unshift({
         id: this.inputTitle,
         title: this.inputTitle,
@@ -52,9 +70,12 @@ export default {
       this.inputTitle = '';
       this.inputDescription= '';
       this.inputLink= ''; 
-
+      console.log(this.tabSelected);
       this.tabSelected = 'stored-resources';
     },
+    confirmError(){
+        this.isInvalid = false;    
+    }
   },
 };
 </script>

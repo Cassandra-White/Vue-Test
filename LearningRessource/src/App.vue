@@ -1,7 +1,7 @@
 <template>
 <div>
     <the-header title="Souviens Toi"></the-header>
-    <the-resource :storedResources="storedResources"></the-resource>
+    <the-resource></the-resource>
 </div>
 </template>
 
@@ -10,7 +10,6 @@ import TheHeader from './components/layout/TheHeader.vue'
 import TheResource from './components/learning-resources/TheResource.vue'
 export default {
     components:{
-        // StoredResources,
         TheHeader,
         TheResource,
     },
